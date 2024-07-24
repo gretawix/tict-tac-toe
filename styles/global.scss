@@ -4,6 +4,8 @@
     --black: #000;
     --pink: #c34678;
     --electric: #07beb8;
+
+    --grid-size: 450px;
 }
 
 *,
@@ -40,10 +42,10 @@ img {
 
 .game-content {
     max-width: 100%;
-    width: 900px;
+    width: 1000px;
     display: grid;
     gap: 80px;
-    grid-template-columns: 1fr 360px;
+    grid-template-columns: 1fr var(--grid-size);
 }
 
 @import "./parts/typography";

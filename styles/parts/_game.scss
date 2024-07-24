@@ -2,7 +2,56 @@
     display: flex;
     align-items: center;
     .game-grid {
-        height: 360px;
-        width: 360px;
+        height: var(--grid-size);
+        width: var(--grid-size);
+        display: grid;
+        gap: 0;
+        grid-template-rows: repeat(3, 1fr);
+        .row {
+            display: grid;
+            gap: 0;
+            grid-template-columns: repeat(3, 1fr);
+            .col {
+                border: 1px solid var(--white);
+                cursor: pointer;
+                background-color: transparent;
+                transition: all 0.5s ease;
+                &:hover {
+                    background-color: var(--white10);
+                }
+                &:first-child {
+                    border-left: none;
+                }
+                &:last-child {
+                    border-right: none;
+                }
+
+                &.filled {
+                    cursor: auto;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: 70px;
+                    &:hover {
+                        background-color: transparent;
+                    }
+                    &.icon-x {
+                        background-image: url("../../assets/img/x-pink.svg");
+                    }
+                    &.icon-o {
+                        background-image: url("../../assets/img/o-electric.svg");
+                    }
+                }
+            }
+            &:first-child {
+                .col {
+                    border-top: none;
+                }
+            }
+            &:last-child {
+                .col {
+                    border-bottom: none;
+                }
+            }
+        }
     }
 }

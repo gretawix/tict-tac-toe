@@ -64,6 +64,12 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.players-status-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   gap: 40px;
 }
 
@@ -122,6 +128,10 @@ h1 {
   font-size: 36px;
 }
 
+.winning-player {
+  display: none;
+}
+
 .game-area {
   display: flex;
   align-items: center;
@@ -138,39 +148,38 @@ h1 {
   gap: 0;
   grid-template-columns: repeat(3, 1fr);
 }
-.game-area .game-grid .row .col {
+.game-area .game-grid .row .cell {
   border: 1px solid var(--white);
   cursor: pointer;
   background-color: transparent;
-  transition: all 0.5s ease;
 }
-.game-area .game-grid .row .col:hover {
+.game-area .game-grid .row .cell:hover {
   background-color: var(--white10);
 }
-.game-area .game-grid .row .col:first-child {
+.game-area .game-grid .row .cell:first-child {
   border-left: none;
 }
-.game-area .game-grid .row .col:last-child {
+.game-area .game-grid .row .cell:last-child {
   border-right: none;
 }
-.game-area .game-grid .row .col.filled {
+.game-area .game-grid .row .cell.filled {
   cursor: auto;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 70px;
 }
-.game-area .game-grid .row .col.filled:hover {
+.game-area .game-grid .row .cell.filled:hover {
   background-color: transparent;
 }
-.game-area .game-grid .row .col.filled.icon-x {
+.game-area .game-grid .row .cell.filled.icon-x {
   background-image: url("../../assets/img/x-pink.svg");
 }
-.game-area .game-grid .row .col.filled.icon-o {
+.game-area .game-grid .row .cell.filled.icon-o {
   background-image: url("../../assets/img/o-electric.svg");
 }
-.game-area .game-grid .row:first-child .col {
+.game-area .game-grid .row:first-child .cell {
   border-top: none;
 }
-.game-area .game-grid .row:last-child .col {
+.game-area .game-grid .row:last-child .cell {
   border-bottom: none;
 }/*# sourceMappingURL=global.css.map */

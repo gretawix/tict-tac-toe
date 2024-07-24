@@ -2,6 +2,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.players-status-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     gap: 40px;
 }
 
@@ -68,4 +74,8 @@
             }
         }
     }
+}
+
+.winning-player {
+    display: none;
 }

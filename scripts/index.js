@@ -5,34 +5,61 @@ document.addEventListener("DOMContentLoaded", () => {
 const playGame = () => {
     let playerTurn = "x";
     let gameFinished = false;
+    let playersPositions = Array.from({ length: 3 }, () => Array(3).fill(""));
     const allCells = getCells();
 
-    allCells.forEach((cell) => {
-        const switchPlayers = () => {
-            const cellClasses = cell.classList;
-            if (playerTurn === "x") {
-                cellClasses.add("filled");
-                cellClasses.add("icon-x");
+    const switchPlayers = (cell) => {
+        const cellClasses = cell.classList;
+        const row = cell.getAttribute("data-row");
+        const col = cell.getAttribute("data-col");
+
+        if (playerTurn === "x") {
+            cellClasses.add("filled", "icon-x");
+            playersPositions[row][col] = playerTurn;
+            if (isWinner(playerTurn, playersPositions)) {
+                console.log(playerTurn + " wins!");
+                endGame();
+            } else {
                 playerTurn = "o";
-            } else if (playerTurn === "o") {
-                cellClasses.add("filled");
-                cellClasses.add("icon-o");
+            }
+        } else if (playerTurn === "o") {
+            cellClasses.add("filled", "icon-o");
+            playersPositions[row][col] = playerTurn;
+            if (isWinner(playerTurn, playersPositions)) {
+                console.log(playerTurn + " wins!");
+                endGame();
+            } else {
                 playerTurn = "x";
             }
+        }
+        toggleActivePlayerCard(playerTurn);
+    };
 
-            toggleActivePlayerCard(playerTurn);
-        };
+    const handleCellClick = (cell) => {
+        if (!gameFinished) {
+            switchPlayers(cell);
+            cell.removeEventListener("click", () => handleCellClick(cell));
 
-        const handleCellClick = () => {
-            switchPlayers();
-            cell.removeEventListener("click", handleCellClick);
             if (isBoardFull()) {
                 gameFinished = true;
-                endGame(playerTurn);
+                endGame();
             }
-        };
-        cell.addEventListener("click", handleCellClick);
+        }
+    };
+
+    allCells.forEach((cell) => {
+        cell.addEventListener("click", () => handleCellClick(cell));
     });
+
+    const endGame = () => {
+        gameFinished = true;
+        allCells.forEach((cell) => {
+            cell.removeEventListener("click", () => handleCellClick(cell));
+            cell.classList.add("filled");
+        });
+        document.querySelector("#players-status-wrapper").style.display = "none";
+        document.querySelector("#winning-player").style.display = "flex";
+    };
 };
 
 const getCells = () => {
@@ -72,9 +99,36 @@ const isBoardFull = () => {
     return filledCells.length === 9;
 };
 
-const endGame = (playerTurn) => {
-    const winningScreen = document.querySelector("#winning-player");
-    document.querySelector("#players-status-wrapper").style.display = "none";
-    winningScreen.style.display = "flex";
-    winningScreen.innerText = `the winner is player ${playerTurn}`;
+const isWinner = (playerTurn, playersPositions) => {
+    // Check rows
+    for (let row of playersPositions) {
+        if (row.every((cell) => cell === playerTurn)) {
+            return true;
+        }
+    }
+
+    // Check columns
+    for (let col = 0; col < 3; col++) {
+        if (
+            playersPositions[0][col] === playerTurn &&
+            playersPositions[1][col] === playerTurn &&
+            playersPositions[2][col] === playerTurn
+        ) {
+            return true;
+        }
+    }
+
+    // Check diagonals
+    if (
+        (playersPositions[0][0] === playerTurn &&
+            playersPositions[1][1] === playerTurn &&
+            playersPositions[2][2] === playerTurn) ||
+        (playersPositions[0][2] === playerTurn &&
+            playersPositions[1][1] === playerTurn &&
+            playersPositions[2][0] === playerTurn)
+    ) {
+        return true;
+    }
+
+    return false;
 };

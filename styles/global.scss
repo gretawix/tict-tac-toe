@@ -1,0 +1,51 @@
+:root {
+    --white: #fff;
+    --white10: #ffffff1a;
+    --black: #000;
+    --pink: #c34678;
+    --electric: #07beb8;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-optical-sizing: auto;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background-color: var(--black);
+    color: var(--white);
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.main-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.game-content {
+    max-width: 100%;
+    width: 900px;
+    display: grid;
+    gap: 80px;
+    grid-template-columns: 1fr 360px;
+}
+
+@import "./parts/typography";
+@import "./parts/players";
+@import "./parts/game";

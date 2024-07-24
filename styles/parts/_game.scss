@@ -1,0 +1,8 @@
+.game-area {
+    display: flex;
+    align-items: center;
+    .game-grid {
+        height: 360px;
+        width: 360px;
+    }
+}

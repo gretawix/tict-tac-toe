@@ -1,0 +1,70 @@
+.players {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+}
+
+.single-player {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .turn-title {
+        font-size: 24px;
+        line-height: 1;
+        padding-bottom: 16px;
+    }
+    .player-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        border-radius: 6px;
+        .player-icon {
+            height: 40px;
+            width: 40px;
+            border-radius: 4px;
+            margin-right: 20px;
+            position: relative;
+            padding: 10px;
+        }
+        .player-name {
+            font-size: 28px;
+            line-height: 1.25;
+        }
+    }
+    &.player-x {
+        .turn-title {
+            color: var(--pink);
+        }
+        .player-card {
+            .player-icon {
+                background-color: var(--pink);
+            }
+        }
+    }
+    &.player-o {
+        .turn-title {
+            color: var(--electric);
+        }
+        .player-card {
+            .player-icon {
+                background-color: var(--electric);
+            }
+        }
+    }
+    &.active {
+        .player-card {
+            padding: 20px 32px;
+            background-color: var(--white10);
+            .player-icon {
+                height: 60px;
+                width: 60px;
+                padding: 16px;
+            }
+            .player-name {
+                font-size: 36px;
+            }
+        }
+    }
+}

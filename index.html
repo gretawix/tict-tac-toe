@@ -7,5 +7,34 @@
         <link rel="stylesheet" href="./styles/global.css" />
         <script src="./scripts/index.js"></script>
     </head>
-    <body></body>
+    <body>
+        <section class="main-screen">
+            <h1>Tic Tac Toe</h1>
+            <div class="game-content">
+                <div class="players">
+                    <div class="single-player player-x active">
+                        <p class="turn-title">Your turn</p>
+                        <div class="player-card">
+                            <div class="player-icon">
+                                <img src="./assets/img/x-white.svg" alt="player x icon" />
+                            </div>
+                            <p class="player-name">Player X</p>
+                        </div>
+                    </div>
+                    <div class="single-player player-o">
+                        <p class="turn-title">Next up</p>
+                        <div class="player-card">
+                            <div class="player-icon">
+                                <img src="./assets/img/o-black.svg" alt="player o icon" />
+                            </div>
+                            <p class="player-name">Player O</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-area">
+                    <div class="game-grid"></div>
+                </div>
+            </div>
+        </section>
+    </body>
 </html>

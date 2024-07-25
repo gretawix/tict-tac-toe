@@ -1,19 +1,20 @@
-import { toggleActivePlayerCard, displayPlayersNames } from "./parts/playersStatus.js";
+import { toggleActivePlayerCard, displayPlayersNames, toggleResultView, getPlayerCard } from "./parts/playersStatus.js";
 import { isWinner, highlightWinningCells } from "./parts/winningValidation.js";
 import { getCells, isBoardFull } from "./parts/commonGameUtils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     drawBoard();
-    playGame();
+    playGame("x");
 });
 
-const playGame = () => {
-    let playerTurn = "x";
+const playGame = (player) => {
+    let playerTurn = player;
     const playerXname = "Player X";
     const playerOname = "Player O";
     let gameFinished = false;
     let board = new Array(3).fill("").map(() => new Array(3).fill(""));
     const allCells = getCells();
+    getPlayerCard(playerTurn).classList.add("active");
     displayPlayersNames(playerXname, playerOname);
 
     const updateBoard = (cell) => {
@@ -32,11 +33,14 @@ const playGame = () => {
             highlightWinningCells(playerTurn, board);
             endGame();
         } else {
-            playerTurn = playerTurn === "x" ? "o" : "x";
+            toggelPlayerTurn();
         }
         toggleActivePlayerCard(playerTurn);
     };
 
+    const toggelPlayerTurn = () => {
+        playerTurn = playerTurn === "x" ? "o" : "x";
+    };
     const handleCellClick = (cell) => {
         if (!gameFinished) {
             updateBoard(cell);
@@ -53,12 +57,20 @@ const playGame = () => {
             cell.removeEventListener("click", () => handleCellClick(cell));
             cell.classList.add("filled");
         });
-        document.querySelector("#players-status-wrapper").style.display = "none";
-        document.querySelector("#winning-player").style.display = "flex";
+        toggleResultView(true);
     };
 
     allCells.forEach((cell) => {
         cell.addEventListener("click", () => handleCellClick(cell));
+    });
+
+    document.querySelector("#rematch-btn").addEventListener("click", () => {
+        drawBoard();
+        document.querySelector("#winning-player").classList.remove(`player-${playerTurn}`);
+        toggelPlayerTurn();
+        toggleActivePlayerCard(playerTurn);
+        toggleResultView(false);
+        playGame(playerTurn);
     });
 };
 

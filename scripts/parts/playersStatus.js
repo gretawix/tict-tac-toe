@@ -30,4 +30,17 @@ const displayPlayersNames = (playerXname, playerOname) => {
     document.querySelector("#player-o-card .player-name").innerText = playerOname;
 };
 
-export { updatePlayerCard, toggleActivePlayerCard, getPlayerCard, displayPlayersNames };
+const toggleResultView = (showResultView) => {
+    const winningPlayerView = document.querySelector("#winning-player");
+    const palyersTurnView = document.querySelector("#players-status-wrapper");
+
+    if (showResultView) {
+        palyersTurnView.style.display = "none";
+        winningPlayerView.style.display = "flex";
+    } else {
+        palyersTurnView.style.display = "flex";
+        winningPlayerView.style.display = "none";
+    }
+};
+
+export { updatePlayerCard, toggleActivePlayerCard, getPlayerCard, displayPlayersNames, toggleResultView };

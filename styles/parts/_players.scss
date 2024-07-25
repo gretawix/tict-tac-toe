@@ -80,4 +80,18 @@
 
 .winning-player {
     display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    .player-card {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 32px;
+        .player-icon {
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+    }
 }

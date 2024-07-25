@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tic tac toe</title>
         <link rel="stylesheet" href="./styles/global.css" />
-        <script src="./scripts/index.js"></script>
+        <script src="./scripts/index.js" type="module"></script>
     </head>
     <body>
         <section class="main-screen">
@@ -19,7 +19,7 @@
                                 <div class="player-icon">
                                     <img src="./assets/img/x-white.svg" alt="player x icon" />
                                 </div>
-                                <p class="player-name">Player X</p>
+                                <p class="player-name"></p>
                             </div>
                         </div>
                         <div class="single-player player-o" id="player-o-card">
@@ -28,30 +28,22 @@
                                 <div class="player-icon">
                                     <img src="./assets/img/o-black.svg" alt="player o icon" />
                                 </div>
-                                <p class="player-name">Player O</p>
+                                <p class="player-name"></p>
                             </div>
                         </div>
                     </div>
-                    <div class="winning-player" id="winning-player">game end</div>
-                </div>
-                <div class="game-area">
-                    <div class="game-grid" id="game-grid">
-                        <div class="row">
-                            <div class="cell" data-row="0" data-col="0"></div>
-                            <div class="cell" data-row="0" data-col="1"></div>
-                            <div class="cell" data-row="0" data-col="2"></div>
-                        </div>
-                        <div class="row">
-                            <div class="cell" data-row="1" data-col="0"></div>
-                            <div class="cell" data-row="1" data-col="1"></div>
-                            <div class="cell" data-row="1" data-col="2"></div>
-                        </div>
-                        <div class="row">
-                            <div class="cell" data-row="2" data-col="0"></div>
-                            <div class="cell" data-row="2" data-col="1"></div>
-                            <div class="cell" data-row="2" data-col="2"></div>
+                    <div class="winning-player active" id="winning-player">
+                        <h2>Congratulations!</h2>
+                        <div class="player-card">
+                            <div class="player-icon">
+                                <img src="./assets/img/o-black.svg" alt="player o icon" class="" />
+                            </div>
+                            <p class="player-name">hello</p>
                         </div>
                     </div>
+                </div>
+                <div class="game-area">
+                    <div class="game-grid" id="game-grid"></div>
                 </div>
             </div>
         </section>

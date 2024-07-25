@@ -1,55 +1,51 @@
+import { toggleActivePlayerCard, displayPlayersNames } from "./parts/playersStatus.js";
+import { isWinner, highlightWinningCells } from "./parts/winningValidation.js";
+import { getCells, isBoardFull } from "./parts/commonGameUtils.js";
+
 document.addEventListener("DOMContentLoaded", () => {
+    drawBoard();
     playGame();
 });
 
 const playGame = () => {
     let playerTurn = "x";
+    const playerXname = "Player X";
+    const playerOname = "Player O";
     let gameFinished = false;
-    let playersPositions = Array.from({ length: 3 }, () => Array(3).fill(""));
+    let board = new Array(3).fill("").map(() => new Array(3).fill(""));
     const allCells = getCells();
+    displayPlayersNames(playerXname, playerOname);
 
-    const switchPlayers = (cell) => {
+    const updateBoard = (cell) => {
         const cellClasses = cell.classList;
         const row = cell.getAttribute("data-row");
         const col = cell.getAttribute("data-col");
+        cellClasses.add("filled", `icon-${playerTurn}`);
+        board[row][col] = playerTurn;
 
-        if (playerTurn === "x") {
-            cellClasses.add("filled", "icon-x");
-            playersPositions[row][col] = playerTurn;
-            if (isWinner(playerTurn, playersPositions)) {
-                console.log(playerTurn + " wins!");
-                endGame();
-            } else {
-                playerTurn = "o";
-            }
-        } else if (playerTurn === "o") {
-            cellClasses.add("filled", "icon-o");
-            playersPositions[row][col] = playerTurn;
-            if (isWinner(playerTurn, playersPositions)) {
-                console.log(playerTurn + " wins!");
-                endGame();
-            } else {
-                playerTurn = "x";
-            }
+        if (isWinner(playerTurn, board)) {
+            const winnerCard = document.querySelector("#winning-player");
+            winnerCard.classList.add(`player-${playerTurn}`);
+            winnerCard.querySelector(".player-name").innerText = `${
+                playerTurn === "x" ? playerXname : playerOname
+            } wins!`;
+            highlightWinningCells(playerTurn, board);
+            endGame();
+        } else {
+            playerTurn = playerTurn === "x" ? "o" : "x";
         }
         toggleActivePlayerCard(playerTurn);
     };
 
     const handleCellClick = (cell) => {
         if (!gameFinished) {
-            switchPlayers(cell);
+            updateBoard(cell);
             cell.removeEventListener("click", () => handleCellClick(cell));
-
-            if (isBoardFull()) {
-                gameFinished = true;
-                endGame();
-            }
+        } else if (isBoardFull()) {
+            //implement tie view
+            endGame();
         }
     };
-
-    allCells.forEach((cell) => {
-        cell.addEventListener("click", () => handleCellClick(cell));
-    });
 
     const endGame = () => {
         gameFinished = true;
@@ -60,75 +56,25 @@ const playGame = () => {
         document.querySelector("#players-status-wrapper").style.display = "none";
         document.querySelector("#winning-player").style.display = "flex";
     };
+
+    allCells.forEach((cell) => {
+        cell.addEventListener("click", () => handleCellClick(cell));
+    });
 };
 
-const getCells = () => {
+const drawBoard = () => {
     const gameGrid = document.querySelector("#game-grid");
-    return gameGrid.querySelectorAll(".cell");
-};
-
-const getPlayerCard = (playerSymbol) => {
-    return document.querySelector(`#player-${playerSymbol}-card`);
-};
-
-const changeCardTitle = (playerCard, text) => {
-    playerCard.querySelector(".turn-title").innerText = text;
-};
-
-const toggleActivePlayerCard = (playerTurn) => {
-    const nextUpText = "Next up";
-    const yourTurnText = "Your turn";
-    const playerXcard = getPlayerCard("x");
-    const playerOcard = getPlayerCard("o");
-    if (playerTurn === "x") {
-        playerOcard.classList.remove("active");
-        playerXcard.classList.add("active");
-        changeCardTitle(playerOcard, nextUpText);
-        changeCardTitle(playerXcard, yourTurnText);
-    } else if (playerTurn === "o") {
-        playerXcard.classList.remove("active");
-        playerOcard.classList.add("active");
-        changeCardTitle(playerXcard, nextUpText);
-        changeCardTitle(playerOcard, yourTurnText);
-    }
-};
-
-const isBoardFull = () => {
-    const allCells = getCells();
-    const filledCells = Array.from(allCells).filter((cell) => cell.classList.contains("filled"));
-    return filledCells.length === 9;
-};
-
-const isWinner = (playerTurn, playersPositions) => {
-    // Check rows
-    for (let row of playersPositions) {
-        if (row.every((cell) => cell === playerTurn)) {
-            return true;
+    gameGrid.innerHTML = "";
+    for (let i = 0; i < 3; i++) {
+        const row = document.createElement("div");
+        row.classList.add("row");
+        gameGrid.appendChild(row);
+        for (let j = 0; j < 3; j++) {
+            const cell = document.createElement("div");
+            cell.classList.add("cell");
+            cell.setAttribute("data-row", i);
+            cell.setAttribute("data-col", j);
+            row.appendChild(cell);
         }
     }
-
-    // Check columns
-    for (let col = 0; col < 3; col++) {
-        if (
-            playersPositions[0][col] === playerTurn &&
-            playersPositions[1][col] === playerTurn &&
-            playersPositions[2][col] === playerTurn
-        ) {
-            return true;
-        }
-    }
-
-    // Check diagonals
-    if (
-        (playersPositions[0][0] === playerTurn &&
-            playersPositions[1][1] === playerTurn &&
-            playersPositions[2][2] === playerTurn) ||
-        (playersPositions[0][2] === playerTurn &&
-            playersPositions[1][1] === playerTurn &&
-            playersPositions[2][0] === playerTurn)
-    ) {
-        return true;
-    }
-
-    return false;
 };

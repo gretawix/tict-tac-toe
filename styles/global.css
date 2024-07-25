@@ -73,6 +73,54 @@ h1 {
   gap: 40px;
 }
 
+.player-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  border-radius: 6px;
+  transition: all 0.5s ease;
+}
+.player-card .player-icon {
+  height: 40px;
+  width: 40px;
+  border-radius: 4px;
+  margin-right: 20px;
+  position: relative;
+  padding: 10px;
+}
+.player-card .player-name {
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+.player-x .turn-title {
+  color: var(--pink);
+}
+.player-x .player-card .player-icon {
+  background-color: var(--pink);
+}
+
+.player-o .turn-title {
+  color: var(--electric);
+}
+.player-o .player-card .player-icon {
+  background-color: var(--electric);
+}
+
+.active .player-card {
+  padding: 20px 32px;
+  background-color: var(--white10);
+}
+.active .player-card .player-icon {
+  height: 60px;
+  width: 60px;
+  padding: 16px;
+}
+.active .player-card .player-name {
+  font-size: 36px;
+}
+
 .single-player {
   display: flex;
   flex-direction: column;
@@ -82,50 +130,6 @@ h1 {
   font-size: 24px;
   line-height: 1;
   padding-bottom: 16px;
-}
-.single-player .player-card {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  border-radius: 6px;
-  transition: all 0.5s ease;
-}
-.single-player .player-card .player-icon {
-  height: 40px;
-  width: 40px;
-  border-radius: 4px;
-  margin-right: 20px;
-  position: relative;
-  padding: 10px;
-}
-.single-player .player-card .player-name {
-  font-size: 28px;
-  line-height: 1.25;
-}
-.single-player.player-x .turn-title {
-  color: var(--pink);
-}
-.single-player.player-x .player-card .player-icon {
-  background-color: var(--pink);
-}
-.single-player.player-o .turn-title {
-  color: var(--electric);
-}
-.single-player.player-o .player-card .player-icon {
-  background-color: var(--electric);
-}
-.single-player.active .player-card {
-  padding: 20px 32px;
-  background-color: var(--white10);
-}
-.single-player.active .player-card .player-icon {
-  height: 60px;
-  width: 60px;
-  padding: 16px;
-}
-.single-player.active .player-card .player-name {
-  font-size: 36px;
 }
 
 .winning-player {
@@ -176,6 +180,9 @@ h1 {
 }
 .game-area .game-grid .row .cell.filled.icon-o {
   background-image: url("../../assets/img/o-electric.svg");
+}
+.game-area .game-grid .row .cell.filled.winning-cell {
+  background-color: var(--white10);
 }
 .game-area .game-grid .row:first-child .cell {
   border-top: none;

@@ -39,6 +39,9 @@
                     &.icon-o {
                         background-image: url("../../assets/img/o-electric.svg");
                     }
+                    &.winning-cell {
+                        background-color: var(--white10);
+                    }
                 }
             }
             &:first-child {

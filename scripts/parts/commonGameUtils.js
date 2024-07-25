@@ -5,8 +5,14 @@ const getCells = () => {
 
 const isBoardFull = () => {
     const allCells = getCells();
-    const filledCells = Array.from(allCells).filter((cell) => cell.classList.contains("filled"));
+    const filledCells = Array.from(allCells).filter(
+        (cell) => cell.classList.contains("icon-x") || cell.classList.contains("icon-o")
+    );
     return filledCells.length === 9;
 };
 
-export { getCells, isBoardFull };
+const createGameArray = (number) => {
+    return new Array(number).fill("").map(() => new Array(number).fill(""));
+};
+
+export { getCells, isBoardFull, createGameArray };

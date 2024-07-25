@@ -1,18 +1,25 @@
-import { toggleActivePlayerCard, displayPlayersNames, toggleResultView, getPlayerCard } from "./parts/playersStatus.js";
+import {
+    toggleActivePlayerCard,
+    displayPlayersNames,
+    showResultView,
+    getPlayerCard,
+    updateWinningCard,
+    displayTieGameCard,
+} from "./parts/playersStatus.js";
 import { isWinner, highlightWinningCells } from "./parts/winningValidation.js";
-import { getCells, isBoardFull } from "./parts/commonGameUtils.js";
+import { getCells, isBoardFull, createGameArray } from "./parts/commonGameUtils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     drawBoard();
     playGame("x");
 });
 
-const playGame = (player) => {
-    let playerTurn = player;
+const playGame = (startingPlayer) => {
+    let playerTurn = startingPlayer;
     const playerXname = "Player X";
     const playerOname = "Player O";
     let gameFinished = false;
-    let board = new Array(3).fill("").map(() => new Array(3).fill(""));
+    let board = createGameArray(3);
     const allCells = getCells();
     getPlayerCard(playerTurn).classList.add("active");
     displayPlayersNames(playerXname, playerOname);
@@ -25,11 +32,7 @@ const playGame = (player) => {
         board[row][col] = playerTurn;
 
         if (isWinner(playerTurn, board)) {
-            const winnerCard = document.querySelector("#winning-player");
-            winnerCard.classList.add(`player-${playerTurn}`);
-            winnerCard.querySelector(".player-name").innerText = `${
-                playerTurn === "x" ? playerXname : playerOname
-            } wins!`;
+            updateWinningCard(playerTurn, playerXname, playerOname);
             highlightWinningCells(playerTurn, board);
             endGame();
         } else {
@@ -41,12 +44,16 @@ const playGame = (player) => {
     const toggelPlayerTurn = () => {
         playerTurn = playerTurn === "x" ? "o" : "x";
     };
-    const handleCellClick = (cell) => {
+
+    const handleCellClick = (event) => {
+        const cell = event.target;
         if (!gameFinished) {
             updateBoard(cell);
-            cell.removeEventListener("click", () => handleCellClick(cell));
-        } else if (isBoardFull()) {
-            //implement tie view
+            cell.removeEventListener("click", handleCellClick);
+        }
+        if (isBoardFull()) {
+            displayTieGameCard();
+            toggelPlayerTurn();
             endGame();
         }
     };
@@ -54,14 +61,14 @@ const playGame = (player) => {
     const endGame = () => {
         gameFinished = true;
         allCells.forEach((cell) => {
-            cell.removeEventListener("click", () => handleCellClick(cell));
+            cell.removeEventListener("click", handleCellClick);
             cell.classList.add("filled");
         });
-        toggleResultView(true);
+        showResultView(true);
     };
 
     allCells.forEach((cell) => {
-        cell.addEventListener("click", () => handleCellClick(cell));
+        cell.addEventListener("click", handleCellClick);
     });
 
     document.querySelector("#rematch-btn").addEventListener("click", () => {
@@ -69,7 +76,7 @@ const playGame = (player) => {
         document.querySelector("#winning-player").classList.remove(`player-${playerTurn}`);
         toggelPlayerTurn();
         toggleActivePlayerCard(playerTurn);
-        toggleResultView(false);
+        showResultView(false);
         playGame(playerTurn);
     });
 };

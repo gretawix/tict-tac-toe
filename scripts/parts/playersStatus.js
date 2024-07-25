@@ -30,7 +30,7 @@ const displayPlayersNames = (playerXname, playerOname) => {
     document.querySelector("#player-o-card .player-name").innerText = playerOname;
 };
 
-const toggleResultView = (showResultView) => {
+const showResultView = (showResultView) => {
     const winningPlayerView = document.querySelector("#winning-player");
     const palyersTurnView = document.querySelector("#players-status-wrapper");
 
@@ -43,4 +43,35 @@ const toggleResultView = (showResultView) => {
     }
 };
 
-export { updatePlayerCard, toggleActivePlayerCard, getPlayerCard, displayPlayersNames, toggleResultView };
+const updateWinningCard = (playerTurn, playerXname, playerOname) => {
+    const winnerCard = document.querySelector("#winning-player");
+    winnerCard.classList.add(`player-${playerTurn}`);
+    winnerCard.querySelector(".player-name").innerText = `${playerTurn === "x" ? playerXname : playerOname} wins!`;
+    winnerCard.querySelector("#winning-title").style.display = "flex";
+    winnerCard.querySelector(`.player-icon`).style.display = "flex";
+
+    if (playerTurn === "x") {
+        winnerCard.querySelector(`.player-x-icon`).style.display = "flex";
+        winnerCard.querySelector(`.player-o-icon`).style.display = "none";
+    } else {
+        winnerCard.querySelector(`.player-x-icon`).style.display = "none";
+        winnerCard.querySelector(`.player-o-icon`).style.display = "flex";
+    }
+};
+
+const displayTieGameCard = () => {
+    const winnerCard = document.querySelector("#winning-player");
+    winnerCard.querySelector("#winning-title").style.display = "none";
+    winnerCard.querySelector(`.player-icon`).style.display = "none";
+    winnerCard.querySelector(".player-name").innerText = "It's a tie!";
+};
+
+export {
+    updatePlayerCard,
+    toggleActivePlayerCard,
+    getPlayerCard,
+    displayPlayersNames,
+    showResultView,
+    updateWinningCard,
+    displayTieGameCard,
+};

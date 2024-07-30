@@ -2,27 +2,33 @@ import {
     toggleActivePlayerCard,
     displayPlayersNames,
     showResultView,
-    getPlayerCard,
     updateWinningCard,
     displayTieGameCard,
-} from "./parts/playersStatus.js";
-import { isWinner, highlightWinningCells } from "./parts/winningValidation.js";
-import { getCells, isBoardFull, createGameArray } from "./parts/commonGameUtils.js";
+} from "./playersStatus.js";
+import { isWinner, highlightWinningCells } from "./winningValidation.js";
+import { isBoardFull, createGameArray } from "./commonGameUtils.js";
+import { getCells, getPlayerCard } from "./selectors.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-    drawBoard();
-    playGame("x");
-});
+const players = {
+    player1: {
+        name: "Player X",
+        symbol: "x",
+    },
+    player2: {
+        name: "Player O",
+        symbol: "o",
+    },
+};
 
 const playGame = (startingPlayer) => {
     let playerTurn = startingPlayer;
     const playerXname = "Player X";
     const playerOname = "Player O";
     let gameFinished = false;
-    let board = createGameArray(3);
+    let board = createGameArray(3, 3);
     const allCells = getCells();
     getPlayerCard(playerTurn).classList.add("active");
-    displayPlayersNames(playerXname, playerOname);
+    displayPlayersNames(players);
 
     const updateBoard = (cell) => {
         const cellClasses = cell.classList;
@@ -33,7 +39,7 @@ const playGame = (startingPlayer) => {
 
         if (isWinner(playerTurn, board)) {
             updateWinningCard(playerTurn, playerXname, playerOname);
-            highlightWinningCells(playerTurn, board);
+            highlightWinningCells(board, allCells);
             endGame();
         } else {
             toggelPlayerTurn();
@@ -51,7 +57,7 @@ const playGame = (startingPlayer) => {
             updateBoard(cell);
             cell.removeEventListener("click", handleCellClick);
         }
-        if (isBoardFull()) {
+        if (isBoardFull(allCells)) {
             displayTieGameCard();
             toggelPlayerTurn();
             endGame();
@@ -97,3 +103,8 @@ const drawBoard = () => {
         }
     }
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+    drawBoard();
+    playGame(players.player1.symbol);
+});

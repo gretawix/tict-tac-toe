@@ -1,3 +1,5 @@
+import { getPlayerCard } from "./selectors.js";
+
 const updatePlayerCard = (playerCard, isActive, titleText) => {
     if (isActive) {
         playerCard.classList.add("active");
@@ -21,13 +23,10 @@ const toggleActivePlayerCard = (playerTurn) => {
     }
 };
 
-const getPlayerCard = (playerTurn) => {
-    return document.querySelector(`#player-${playerTurn}-card`);
-};
-
-const displayPlayersNames = (playerXname, playerOname) => {
-    document.querySelector("#player-x-card .player-name").innerText = playerXname;
-    document.querySelector("#player-o-card .player-name").innerText = playerOname;
+const displayPlayersNames = (players) => {
+    Object.entries(players).forEach(([_, value]) => {
+        document.querySelector(`#player-${value.symbol}-card .player-name`).innerText = value.name;
+    });
 };
 
 const showResultView = (showResultView) => {
@@ -69,7 +68,6 @@ const displayTieGameCard = () => {
 export {
     updatePlayerCard,
     toggleActivePlayerCard,
-    getPlayerCard,
     displayPlayersNames,
     showResultView,
     updateWinningCard,

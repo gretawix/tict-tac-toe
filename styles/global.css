@@ -168,12 +168,10 @@ h2 {
   width: var(--grid-size);
   display: grid;
   gap: 0;
-  grid-template-rows: repeat(3, 1fr);
 }
 .game-area .game-grid .row {
   display: grid;
   gap: 0;
-  grid-template-columns: repeat(3, 1fr);
 }
 .game-area .game-grid .row .cell {
   border: 1px solid var(--white);

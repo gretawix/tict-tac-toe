@@ -22,9 +22,9 @@ const winningColumn = (board) => {
 };
 
 const winningDiagonal = (board) => {
-    const topLeftCell = board[0][0];
     const lastColIndex = board[0].length - 1;
     const topRightCell = board[0][lastColIndex];
+    const topLeftCell = board[0][0];
 
     if (topLeftCell && board.every((row, index) => row[index] === topLeftCell)) {
         return { diagonalWinner: topLeftCell, coordinates: board.map((_, rowIndex) => [rowIndex, rowIndex]) };

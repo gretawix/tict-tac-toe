@@ -3,8 +3,8 @@ const getCells = () => {
     return gameGrid.querySelectorAll(".cell");
 };
 
-const getPlayerCard = (playerTurn) => {
-    return document.querySelector(`#player-${playerTurn}-card`);
-};
+const getPlayerCard = (player) => document.querySelector(`#player-${player}-card`);
 
-export { getCells, getPlayerCard };
+const getWinnerCard = () => document.querySelector("#winning-player");
+
+export { getCells, getPlayerCard, getWinnerCard };
